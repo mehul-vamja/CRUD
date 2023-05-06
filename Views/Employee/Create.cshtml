@@ -1,0 +1,114 @@
+﻿@model CRUD.Models.EmployeeModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<main aria-labelledby="title">
+    @using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Add Employee</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            @Html.LabelFor(m => m.EmployeeName, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.EmployeeName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.EmployeeName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            @Html.LabelFor(m => m.Country, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            @Html.LabelFor(m => m.Age, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        @*<input type="file" name="file" />*@
+        <div class="row">
+                @Html.LabelFor(m => m.Resume, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    <input type="file" id="file-upload" />
+
+                    @Html.ValidationMessageFor(m => m.Resume, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+          
+        <div class="form-group row">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</main>
+
+
+<div>
+    @Html.ActionLink("Back", "Index")
+</div>
+
+
+<script>
+
+    /* this function will call when page loaded successfully */
+    $(document).ready(function(){
+
+        /* this function will call when onchange event fired */
+        $("#file-upload").on("change",function(){
+
+            /* current this object refer to input element */
+            var $input = $(this);
+
+            /* collect list of files choosen */
+            var files = $input[0].files;
+
+            var filename = files[0].name;
+
+            /* getting file extenstion eg- .jpg,.png, etc */
+            var extension = filename.substr(filename.lastIndexOf("."));
+
+            /* define allowed file types */
+            var allowedExtensionsRegx = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+            /* testing extension with regular expression */
+            var isAllowed = allowedExtensionsRegx.test(extension);
+
+            if(isAllowed){
+                alert("File type is valid for the upload");
+                /* file upload logic goes here... */
+            } else {
+                $input.val("");
+                alert("Invalid File Type.");
+                return false;
+            }
+        });
+    });
+
+</script>

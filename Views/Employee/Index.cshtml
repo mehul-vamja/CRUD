@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CRUD.Employee>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => m.EmployeeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.EmployeeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.Age)
+        </th>
+        <th>
+            File
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(m => item.EmployeeId)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.EmployeeName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.Resume)
+            @if (item.Resume != null)
+            {
+                @Html.ActionLink("DownloadFile", "DownloadFile", new { resume = Convert.ToString(item.Resume.Trim()) })
+            }
+            
+            @*@Html.ActionLink("DownloadFile", "Delete", new { id = item.EmployeeId })*@
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId })
+        </td>
+    </tr>
+}
+
+</table>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
